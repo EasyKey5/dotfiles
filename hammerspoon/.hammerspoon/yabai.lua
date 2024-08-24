@@ -98,17 +98,19 @@ for key, gridConfig in pairs(floating) do
 end ]]
 
 -- Float window
---[[ hyper.bindKey("g", function()
+hyper.bindKey("g", function()
 	execYabai("-m window --toggle float")
-	execYabai("-m window --grid 4:4:1:1:2:2")
-end) ]]
+	execYabai("-m window --grid 10:10:1:1:8:8")
+end)
 
 --NOTE: unused
 -- balance window size
---
--- hs.hotkey.bind({ "alt", "shift" }, "0", function()
--- 	execYabai("-m space --balance")
--- end)
+
+hs.hotkey.bind({ "alt", "shift" }, "0", function()
+	execYabai("-m space --balance")
+end)
+
+
 
 -- layout settings
 local layouts = {
@@ -126,14 +128,18 @@ local toggleArgs = {
 	a = "-m space --toggle padding; opt/homebrew/bin/yabai -m space --toggle gap",
 	s = "-m window --toggle sticky",
 	g = "-m window --toggle float; /opt/homebrew/bin/yabai -m window --grid 4:4:1:1:2:2",
-	f = "-m window --toggle zoom-fullscreen",
 	-- d = "-m window --toggle zoom-parent",
-	-- e = "-m window --toggle split",
+	e = "-m window --toggle split",
 	-- o = "-m window --toggle topmost",
-	-- r = "-m space --rotate 90",
-	-- x = "-m space --mirror x-axis",
-	-- y = "-m space --mirror y-axis",
+	r = "-m space --rotate 90",
+	x = "-m space --mirror x-axis",
+	y = "-m space --mirror y-axis",
 }
+
+-- toggle fullscreen
+hyper.bindShiftKey("f", function ()
+	execYabai("-m window --toggle zoom-fullscreen")
+end)
 
 for key, command in pairs(toggleArgs) do
 	hyper.bindKeyWithModifiers(key, { "alt" }, function()
@@ -161,10 +167,6 @@ local toggleApp = function(appName, launch)
 		end
 	end
 end
-
-hyper.bindShiftKey("j", function()
-	toggleApp("iTerm 2", true)
-end)
 
 return {
 	yabai = yabai,

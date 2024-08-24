@@ -33,7 +33,6 @@ function enterHyperMode()
 	This.escapeTimer:start()
 end
 
--- Leave Hyper Mode when F18 (Hyper) is pressed
 function exitHyperMode()
 	This.hyperMode:exit()
 	if This.sendEscape then
