@@ -33,3 +33,20 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+--TODO: vim.key
+
+
+vim.keymap.set('n', '-', '<C-w>-', {})
+vim.keymap.set('n', '+', '<C+w>+', {})
+
+
+-- Commands
+
+vim.api.nvim_create_user_command("W", "w", {nargs = 0})
+
+vim.api.nvim_create_user_command("Wq", "wq", {nargs = 0})
+vim.api.nvim_create_user_command("WQ", "wq", {nargs = 0})
+
+
+

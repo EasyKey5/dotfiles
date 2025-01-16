@@ -14,7 +14,7 @@ return { -- Autocompletion
         end
         return 'make install_jsregexp'
       end)(),
-      dependencies = { 'rafamadriz/friendly-snippets', { 'evesdropper/luasnip-latex-snippets.nvim', ft = 'tex' } },
+      dependencies = { { 'evesdropper/luasnip-latex-snippets.nvim', ft = 'tex' } },
       config = function()
         --[[
           local ls = require 'luasnip'
@@ -233,13 +233,6 @@ return { -- Autocompletion
           ),
 
           -- Copyright (c) 2024 Author. All Rights Reserved.
-          s('cr', {
-            t 'Copyright ~\\copyright~ ',
-            f(function()
-              return os.time()
-            end),
-          }),
-
           -- rec_ls is self-referencing. That makes this snippet 'infinite' eg. have as many
           -- \item as necessary by utilizing a choiceNode.
           s('itemize', {
@@ -322,6 +315,7 @@ return { -- Autocompletion
     --    set up the ones that are useful for you.
     -- 'rafamadriz/friendly-snippets',
   },
+
   config = function()
     -- See `:help cmp`
     local cmp = require 'cmp'
@@ -384,17 +378,5 @@ return { -- Autocompletion
       },
     }
   end,
-}, 
-{ -- You can easily change to a different colorscheme.
-  -- Change the name of the colorscheme plugin below, and then
-  -- change the command in the config to whatever the name of that colorscheme is
-  --
-  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-  'oxfist/night-owl.nvim',
-  lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  priority = 1000, -- make sure to load this before all the other start plugins
-  config = function()
-    -- load the colorscheme here
-    vim.cmd.colorscheme 'night-owl'
-  end,
 }
+

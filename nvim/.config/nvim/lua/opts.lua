@@ -76,3 +76,5 @@ vim.g.matchparen = true
 
 -- Don't wrap lines
 vim.opt.wrap = false
+
+

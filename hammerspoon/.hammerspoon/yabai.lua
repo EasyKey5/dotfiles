@@ -106,7 +106,7 @@ end)
 --NOTE: unused
 -- balance window size
 
-hs.hotkey.bind({ "alt", "shift" }, "0", function()
+hyper.bindShiftKey("0", function()
 	execYabai("-m space --balance")
 end)
 
@@ -136,16 +136,23 @@ local toggleArgs = {
 	y = "-m space --mirror y-axis",
 }
 
--- toggle fullscreen
-hyper.bindShiftKey("f", function ()
-	execYabai("-m window --toggle zoom-fullscreen")
-end)
 
 for key, command in pairs(toggleArgs) do
 	hyper.bindKeyWithModifiers(key, { "alt" }, function()
 		execYabai(command)
 	end)
 end
+
+
+-- toggle split
+hyper.bindKey("s", function ()
+	execYabai("-m window --toggle split")
+end)
+
+-- toggle fullscreen
+hyper.bindShiftKey("f", function ()
+	execYabai("-m window --toggle zoom-fullscreen")
+end)
 
 --NOTE: Toggle an app
 
@@ -168,7 +175,14 @@ local toggleApp = function(appName, launch)
 	end
 end
 
+-- Select an app
+
+hyper.bindKey("a", function ()
+	execYabai("-m window --focus $(yabai -m query --windows --space | jq -c '.[1].id')")
+end)
+
 return {
 	yabai = yabai,
 	execYabai = execYabai,
 }
+

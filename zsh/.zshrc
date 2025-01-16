@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -120,40 +120,92 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/tama/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/tama/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/tama/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/tama/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/Users/tama/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/tama/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/Users/tama/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/tama/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+#
 
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+export MAMBA_EXE='/Users/tama/miniconda3/bin/mamba';
+export MAMBA_ROOT_PREFIX='/Users/tama/miniconda3';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
 
 export PATH=$PATH:/Users/tama/.spicetify
 export MODULAR_HOME="/Users/tama/.modular"
 export PATH="/Users/tama/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
 export PATH="/Users/tama/.pkl:$PATH"
 export PATH="/Users/tama/.local/bin:$PATH"
+export PATH="/Users/tama/Code/bin:$PATH"
+
+export PATH="/Users/tama/Code/CBQN/:$PATH"
+
+
+
+# -=-=-=-= MY CONFIGS =-=-=-=-=-
+
+
+bindkey -v
 
 alias v=nvim
 alias vim=nvim
 alias nv=nvim
 
 # general use
-alias ls='exa --icons'
-alias l='exa --icons'
-alias ll='exa -lh --git --color-scale --icons'
-alias la='exa -lha --git --color-scale --icons'
+alias ls='lsd'
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
 
 # speciality views
 alias lS='exa -1 --icons'
 alias lt='exa --tree --level=2 --icons'
 
 alias cat=bat
+
+alias t=taskell
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS=' --height=40% --preview="bat --color=always {}" --preview-window=right:60%:wrap'
+export FZF_DEFAULT_COMMAND='fd . --type file'
+export FZF_CTRL_T_COMMAND='fd . --type file'
+
+alias f='fzf | xargs -I {} nvim {}'
+
+alias c='cd $(fd . /Users/tama --type directory | fzf --no-preview)'
+
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder.'
+
+
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+export MAMBA_EXE='/Users/tama/miniconda3/bin/mamba';
+export MAMBA_ROOT_PREFIX='/Users/tama/miniconda3';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
