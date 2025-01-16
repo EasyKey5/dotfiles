@@ -1,0 +1,89 @@
+# ~/.config/yabai/yabairc
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+
+# global settings
+yabai -m config mouse_follows_focus          on
+# focus_follows_mouse: off, autoraise, autofocus
+yabai -m config focus_follows_mouse          autofocus
+yabai -m config window_placement             second_child
+yabai -m config window_topmost               off
+yabai -m config window_shadow                on
+yabai -m config window_opacity               off
+yabai -m config window_opacity_duration      0.0
+yabai -m config active_window_opacity        1.0
+yabai -m config normal_window_opacity        0.90
+yabai -m config window_border                off
+yabai -m config window_border_width          6
+yabai -m config active_window_border_color   0xff775759
+yabai -m config normal_window_border_color   0xff555555
+yabai -m config insert_feedback_color        0xffd75f5f
+yabai -m config split_ratio                  .447
+yabai -m config auto_balance                 off
+yabai -m config mouse_modifier               ctrl
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+yabai -m config mouse_drop_action            swap
+
+# general space settings
+yabai -m config layout                       bsp
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               10
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
+yabai -m config window_gap                   5 
+
+# applications
+yabai -m rule --add app="^App Store$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="iStat Menus.*" manage=off mouse_follows_focus=off
+yabai -m rule --add app="^Surfshark*" manage=off
+yabai -m rule --add app="CleanShot X" manage=off 
+yabai -m rule --add app="^picopad$" manage=off mouse_follows_focus=off
+yabai -m rule --add app="^Calculator$" manage=off mouse_follows_focus=off
+yabai -m rule --add app="^Dropover$" manage=off mouse_follows_focus=off
+yabai -m rule --add title="^UTM – Windows 1$" manage=off mouse_follows_focus=off
+yabai -m rule --add title="^Enter new Value for" manage=off mouse_follows_focus=off
+
+
+# yabai -m rule --add app="^MultiViewer for F1" title="Track Map - MultiViewer" manage=off mouse_follows_focus=off
+
+
+# Rules don't get triggered when a window title changes. Use a signal instead with event=window_title_changed.
+
+
+yabai -m signal --add app='MultiViewer' event='window_title_changed' \
+  action="yabai -m rule --add label=$(uuidgen) app='MultiViewer' title='Track Map - MultiViewer' manage=off"'
+
+
+# float system preferences
+yabai -m rule --add app="^System Information$" manage=off
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add title='Preferences$' manage=off
+yabai -m rule --add title='^Archive Utility$' manage=off
+
+yabai -m rule --add app="Settings$" manage=off
+yabai -m rule --add app="[Oo]ptions$" manage=off
+yabai -m rule --add app="Install" manage=off
+
+
+yabai -m config --space $(yabai -m query --displays | jq 'map(select(.index==2)) | .[0].spaces[0]') left_padding 0
+yabai -m config --space $(yabai -m query --displays | jq 'map(select(.index==2)) | .[0].spaces[0]') right_padding 0
+yabai -m config --space $(yabai -m query --displays | jq 'map(select(.index==2)) | .[0].spaces[1]') left_padding 0
+yabai -m config --space $(yabai -m query --displays | jq 'map(select(.index==2)) | .[0].spaces[1]') right_padding 0
+
+# focus window after active space changes
+yabai -m signal --add event=space_changed action="yabai -m window --focus $(yabai -m query --windows --space | jq -c '.[1].id')"
+
+# focus window after active display changes
+yabai -m signal --add event=display_changed action="yabai -m window --focus $(yabai -m query --windows --space | jq -c '.[1].id')"
+
+
+
+# killall limelight &> /dev/null
+# limelight &> /dev/null &
+
+
+echo "yabai configuration loaded.."
