@@ -185,9 +185,10 @@ alias cat=bat
 alias t=taskell
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS=' --height=40% --preview="bat --color=always {}" --preview-window=right:60%:wrap'
-export FZF_DEFAULT_COMMAND='fd . --type file'
-export FZF_CTRL_T_COMMAND='fd . --type file'
+export FZF_DEFAULT_OPTS=''
+# export FZF_DEFAULT_OPTS=' --height=40% --preview="bat --color=always {}" --preview-window=right:60%:wrap'
+# export FZF_DEFAULT_COMMAND='fd . --type file'
+# export FZF_CTRL_T_COMMAND='fd . --type file'
 
 alias f='fzf | xargs -I {} nvim {}'
 
@@ -195,8 +196,19 @@ alias c='cd $(fd . /Users/tama --type directory | fzf --no-preview)'
 
 alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder.'
 
+alias ta='tmux attach -t base || tmux new -s base'
 
+alias so='source ~/.zshrc'
 
+function mc {
+  if [ ! -n "$1" ]; then
+    echo "Enter a directory name"
+  elif [ -d $1 ]; then
+    echo "\`$1' already exists"
+  else
+    mkdir -p $1 && cd $1
+  fi
+}
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba shell init' !!
 export MAMBA_EXE='/Users/tama/miniconda3/bin/mamba';

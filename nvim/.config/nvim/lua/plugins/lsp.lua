@@ -8,15 +8,15 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
       {
-      "jalvesaq/cmp-nvim-r",
-      {
-          "hrsh7th/nvim-cmp",
+        'jalvesaq/cmp-nvim-r',
+        {
+          'hrsh7th/nvim-cmp',
           config = function()
-              require("cmp").setup({ sources = {{ name = "cmp_nvim_r" }}})
-              require("cmp_r").setup({})
+            require('cmp').setup { sources = { { name = 'cmp_nvim_r' } } }
+            require('cmp_r').setup {}
           end,
+        },
       },
-  },
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -27,35 +27,6 @@ return {
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
-      -- Brief Aside: **What is LSP?**
-      --
-      -- LSP is an acronym you've probably heard, but might not understand what it is.
-      --
-      -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-      -- and language tooling communicate in a standardized fashion.
-      --
-      -- In general, you have a "server" which is some tool built to understand a particular
-      -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc). These Language Servers
-      -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-      -- processes that communicate with some "client" - in this case, Neovim!
-      --
-      -- LSP provides Neovim with features like:
-      --  - Go to definition
-      --  - Find references
-      --  - Autocompletion
-      --  - Symbol Search
-      --  - and more!
-      --
-      -- Thus, Language Servers are external tools that must be installed separately from
-      -- Neovim. This is where `mason` and related plugins come into play.
-      --
-      -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-      -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
-      --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -110,11 +81,6 @@ return {
           --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -130,13 +96,52 @@ return {
         end,
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP Specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+      local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+
+      require('lspconfig').lua_ls.setup {
+        root_dir = vim.loop.cwd(),
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+              return
+            end
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              -- Tell the language server which version of Lua you're using
+              -- (most likely LuaJIT in the case of Neovim)
+              version = 'LuaJIT',
+            },
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths here.
+                -- "${3rd}/luv/library"
+                -- "${3rd}/busted/library",
+              },
+              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+              -- library = vim.api.nvim_get_runtime_file("", true)
+            },
+          })
+        end,
+        settings = {
+          Lua = {},
+        },
+      }
+      capabilities = vim.tbl_deep_extend('force', capabilities, cmp_nvim_lsp.default_capabilities())
+      require('lspconfig').clangd.setup {
+        capabilities = cmp_nvim_lsp.default_capabilities(),
+        cmd = {
+          'clangd',
+          '--offset-encoding=utf-16',
+        },
+      }
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -148,10 +153,8 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         r_language_server = {
-            settings = {
-              
-            }
-          },
+          settings = {},
+        },
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -211,41 +214,41 @@ return {
       }
     end,
   },
-   {
-      "folke/trouble.nvim",
-      opts = {}, -- for default options, refer to the configuration section for custom setup.
-      cmd = "Trouble",
-      keys = {
-        {
-          "<leader>xx",
-          "<cmd>Trouble diagnostics toggle<cr>",
-          desc = "Diagnostics (Trouble)",
-        },
-        {
-          "<leader>xX",
-          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-          desc = "Buffer Diagnostics (Trouble)",
-        },
-        {
-          "<leader>cs",
-          "<cmd>Trouble symbols toggle focus=false<cr>",
-          desc = "Symbols (Trouble)",
-        },
-        {
-          "<leader>cl",
-          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-          desc = "LSP Definitions / references / ... (Trouble)",
-        },
-        {
-          "<leader>xL",
-          "<cmd>Trouble loclist toggle<cr>",
-          desc = "Location List (Trouble)",
-        },
-        {
-          "<leader>xQ",
-          "<cmd>Trouble qflist toggle<cr>",
-         desc = "Quickfix List (Trouble)",
-        },
+  {
+    'folke/trouble.nvim',
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
       },
-    }
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
+      },
+      {
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Symbols (Trouble)',
+      },
+      {
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
+      },
+      {
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
+      },
+      {
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
+      },
+    },
+  },
 }

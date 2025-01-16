@@ -1,10 +1,18 @@
 -- [[ Configure and install plugins ]]
 return {
+  -- {
+  --   'embark-theme/vim',
+  --   as = 'embark',
+  --   config = function()
+  --     vim.cmd 'colorscheme embark'
+  --   end,
+  -- },
   {
-    'embark-theme/vim',
-    as = 'embark',
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
     config = function()
-      vim.cmd 'colorscheme embark'
+      vim.cmd [[colorscheme tokyonight]]
     end,
   },
   {
@@ -80,58 +88,58 @@ return {
       }
     end,
   },
-  {
-    'zbirenbaum/copilot.lua',
-    event = 'InsertEnter',
-    cmd = 'Copilot',
-    config = function()
-      require('copilot').setup {
-        panel = {
-          enabled = true,
-          auto_refresh = false,
-          keymap = {
-            jump_prev = '<C-p>',
-            jump_next = '<C-n>',
-            accept = '<CR>',
-            refresh = 'gr',
-            open = '<C-CR>',
-          },
-          layout = {
-            position = 'bottom', -- | top | left | right
-            ratio = 0.4,
-          },
-        },
-        suggestion = {
-          enabled = true,
-          auto_trigger = false,
-          hide_during_completion = true,
-          debounce = 75,
-          keymap = {
-            accept = '<C-l>',
-            accept_word = '<C-S-l>',
-            accept_line = false,
-            next = false,
-            prev = false,
-            dismiss = '<C-t>',
-          },
-        },
-        filetypes = {
-          yaml = false,
-          markdown = false,
-          help = false,
-          gitcommit = false,
-          gitrebase = false,
-          hgcommit = false,
-          svn = false,
-          cvs = false,
-          ['.'] = false,
-        },
-        copilot_node_command = 'node', -- Node.js version must be > 18.x
-        server_opts_overrides = {},
-      }
-    end,
-  },
-
+  -- {
+  --   'zbirenbaum/copilot.lua',
+  --   event = 'InsertEnter',
+  --   cmd = 'Copilot',
+  --   config = function()
+  --     require('copilot').setup {
+  --       panel = {
+  --         enabled = true,
+  --         auto_refresh = false,
+  --         keymap = {
+  --           jump_prev = '<C-p>',
+  --           jump_next = '<C-n>',
+  --           accept = '<CR>',
+  --           refresh = 'gr',
+  --           open = '<C-CR>',
+  --         },
+  --         layout = {
+  --           position = 'bottom', -- | top | left | right
+  --           ratio = 0.4,
+  --         },
+  --       },
+  --       suggestion = {
+  --         enabled = true,
+  --         auto_trigger = false,
+  --         hide_during_completion = true,
+  --         debounce = 75,
+  --         keymap = {
+  --           accept = '<C-l>',
+  --           accept_word = '<C-S-l>',
+  --           accept_line = false,
+  --           next = false,
+  --           prev = false,
+  --           dismiss = '<C-t>',
+  --         },
+  --       },
+  --       filetypes = {
+  --         yaml = false,
+  --         markdown = false,
+  --         help = false,
+  --         gitcommit = false,
+  --         gitrebase = false,
+  --         hgcommit = false,
+  --         svn = false,
+  --         cvs = false,
+  --         ['.'] = false,
+  --       },
+  --       copilot_node_command = 'node', -- Node.js version must be > 18.x
+  --       server_opts_overrides = {},
+  --     }
+  --   end,
+  -- },
+  --
   -- {
   --   'oxfist/night-owl.nvim',
   --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
