@@ -11,7 +11,7 @@ config.unicode_version = 15
 config.enable_tab_bar = false
 config.window_background_opacity = 0.9
 -- config.default_prog = { "fish", "-c", "tmux", "attach", "-t", "base", "||", "tmux", "new", "-s", "base" }
-config.default_prog = { "fish", "-c tmux attach -t base || tmux new -s base" }
+config.default_prog = { "/run/current-system/sw/bin/fish", "-c tmux attach -t base || tmux new -s base" }
 config.window_decorations = "RESIZE"
 
 return config
