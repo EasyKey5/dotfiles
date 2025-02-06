@@ -20,9 +20,11 @@
     };
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # for ROS
+    nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, home-manager, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, home-manager, nixgl, ... }:
   let
     configuration = { pkgs, config, ... }: {
 
@@ -43,11 +45,16 @@
           pkgs.lua
           pkgs.tmux
           pkgs.yabai
-          pkgs.obsidian
           pkgs.arc-browser
           pkgs.home-manager
           pkgs.ripgrep
           pkgs.youtube-music
+          pkgs.texliveFull
+          pkgs.bartender
+          pkgs.stow
+          pkgs.istatmenus
+          pkgs.ollama
+          pkgs.sketchybar
         ];
 
         homebrew = {
@@ -62,6 +69,7 @@
           casks = [
             "wezterm"
             "youtube-music"
+            "raycast"
           ];
       };
 
@@ -99,7 +107,42 @@
       users.users.tama.home = "/Users/tama/";
       # home-manager.backupFileExtension = ".bak";
 
+
+
+      # MacOS config
+      system.defaults = {
+
+          dock.autohide = true;
+          finder = {
+              AppleShowAllExtensions = true;
+              AppleShowAllFiles = true;
+              ShowPathbar = true;
+              FXEnableExtensionChangeWarning = false;
+              FXPreferredViewStyle="clmv"; # column view
+          };
+      };
+
     };
+          launchd.user.agents.remap-keys = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/usr/bin/hidutil"
+        "property"
+        "--set"
+        ''{
+          "UserKeyMapping":[
+            
+        
+        {"HIDKeyboardModifierMappingDst": 30064771181,
+        "HIDKeyboardModifierMappingSrc": 30064771129}
+   
+
+            ]
+        }''
+      ];
+      RunAtLoad = true;
+    };
+  };
   in
   {
     # Build darwin flake using:
