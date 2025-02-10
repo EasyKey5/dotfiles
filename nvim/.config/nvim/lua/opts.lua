@@ -77,4 +77,12 @@ vim.g.matchparen = true
 -- Don't wrap lines
 vim.opt.wrap = false
 
+-- Ignore multiple different client offset_encodings error
+local notify = vim.notify
+vim.notify = function(msg, ...)
+  if msg:match 'warning: multiple different client offset_encodings' then
+    return
+  end
 
+  notify(msg, ...)
+end

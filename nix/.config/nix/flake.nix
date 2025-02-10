@@ -21,10 +21,10 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # for ROS
-    nixgl.url = "github:nix-community/nixGL";
+    # nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, home-manager, nixgl, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, home-manager, ... }:
   let
     configuration = { pkgs, config, ... }: {
 
@@ -48,21 +48,34 @@
           pkgs.arc-browser
           pkgs.home-manager
           pkgs.ripgrep
+          pkgs.cargo
           pkgs.youtube-music
           pkgs.texliveFull
           pkgs.bartender
           pkgs.stow
           pkgs.istatmenus
+          pkgs.tmuxinator
           pkgs.ollama
-          pkgs.sketchybar
         ];
 
         homebrew = {
           enable = true;
 
+          taps = [
+            # for sketchybar
+            "FelixKratz/formulae"
+          ];
+
           # CLI Tools
           brews = [
             "neofetch"
+
+            {
+              name = "sketchybar";
+              start_service = true;
+              restart_service = "changed";
+            }
+
           ];
 
           # GUI Apps
@@ -70,6 +83,8 @@
             "wezterm"
             "youtube-music"
             "raycast"
+            "font-hack-nerd-font"
+            "font-fira-code-nerd-font"
           ];
       };
 

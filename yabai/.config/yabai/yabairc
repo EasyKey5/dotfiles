@@ -1,7 +1,11 @@
+#!/bin/bash
+
+
 # ~/.config/yabai/yabairc
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 
+IS_MAIN_DISPLAY=$(system_profiler SPDisplaysDataType | grep -B 3 'Main Display:' | awk '/Display Type/ {print $3}')
 
 # global settings
 yabai -m config mouse_follows_focus          on
@@ -28,7 +32,9 @@ yabai -m config mouse_drop_action            swap
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  10
+
+# add space for sketchybar
+yabai -m config external_bar "all:50:0"
 yabai -m config bottom_padding               10
 yabai -m config left_padding                 10
 yabai -m config right_padding                10
@@ -86,9 +92,6 @@ yabai -m signal --add event=display_changed action="yabai -m window --focus $(ya
 # killall limelight &> /dev/null
 # limelight &> /dev/null &
 
-
-# add space for sketchybar
-yabai -m config external_bar all:32:0
 
 
 echo "yabai configuration loaded.."

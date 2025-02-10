@@ -3,11 +3,14 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for neovim
+      'neovim/nvim-lsp',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
+      'gvolpe/nvim-lsp',
       {
+
         'jalvesaq/cmp-nvim-r',
         {
           'hrsh7th/nvim-cmp',
@@ -100,8 +103,11 @@ return {
 
       local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 
+      local nvim_lsp = require 'nvim_lsp'
+
       require('lspconfig').lua_ls.setup {
-        root_dir = vim.loop.cwd(),
+        -- root_dir = vim.loop.cwd(),
+        root_dir = nvim_lsp.util.root_pattern('init.lua', '.git'),
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
