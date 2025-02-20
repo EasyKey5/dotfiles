@@ -1,5 +1,6 @@
 if status is-interactive
-    oh-my-posh init fish --config '/Users/tama/.config/fish/themes/tokyonight_storm.omp.json' | source
+    # oh-my-posh init fish --config '/Users/tama/.config/fish/themes/tokyonight_storm.omp.json' | source
+
 end
 
 
@@ -9,3 +10,5 @@ alias lg="lazygit"
 
 set -g fish_greeting
 function fish_mode_prompt; end
+direnv hook fish | source
+

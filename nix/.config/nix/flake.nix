@@ -2,6 +2,7 @@
   description = "Very Zenful System Flake";
 
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,9 +23,24 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # for ROS
     # nixgl.url = "github:nix-community/nixGL";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, home-manager, ... }:
+  outputs = inputs@{ self,
+                     nix-darwin, 
+                     nixpkgs, 
+                     nix-homebrew, 
+                     homebrew-core, 
+                     homebrew-cask, 
+                     homebrew-bundle, 
+                     home-manager, 
+                     rust-overlay, 
+                     flake-utils,
+                     ... 
+                    }:
   let
     configuration = { pkgs, config, ... }: {
 
@@ -37,6 +53,7 @@
           pkgs.neovim
           pkgs.wezterm
           pkgs.fish
+          pkgs.oh-my-posh
           pkgs.bat
           pkgs.fzf
           pkgs.git
@@ -48,7 +65,7 @@
           pkgs.arc-browser
           pkgs.home-manager
           pkgs.ripgrep
-          pkgs.cargo
+          # pkgs.cargo
           pkgs.youtube-music
           pkgs.texliveFull
           pkgs.bartender
@@ -56,6 +73,8 @@
           pkgs.istatmenus
           pkgs.tmuxinator
           pkgs.ollama
+          pkgs.nixd
+          pkgs.direnv
         ];
 
         homebrew = {
@@ -137,25 +156,25 @@
           };
       };
 
-    };
-          launchd.user.agents.remap-keys = {
-    serviceConfig = {
-      ProgramArguments = [
-        "/usr/bin/hidutil"
-        "property"
-        "--set"
-        ''{
-          "UserKeyMapping":[
-            
-        
-        {"HIDKeyboardModifierMappingDst": 30064771181,
-        "HIDKeyboardModifierMappingSrc": 30064771129}
-   
+      launchd.user.agents.remap-keys = {
+      serviceConfig = {
+        ProgramArguments = [
+          "/usr/bin/hidutil"
+          "property"
+          "--set"
+          ''{
+            "UserKeyMapping":[
+              
+          
+          {"HIDKeyboardModifierMappingDst": 30064771181,
+          "HIDKeyboardModifierMappingSrc": 30064771129}
+     
 
-            ]
-        }''
-      ];
-      RunAtLoad = true;
+              ]
+          }''
+        ];
+        RunAtLoad = true;
+      };
     };
   };
   in
@@ -187,5 +206,9 @@
 
     # Expose the package set, for convenience
     darwinPackages = self.darwinConfigurations."Tamas-Laptop".pkgs;
+
+  #   devShells.default = mkShell {
+  #     buildInputs = [rust-bin.stable.latest.default ];
+  #   };
   };
 }

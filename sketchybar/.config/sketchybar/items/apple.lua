@@ -11,7 +11,7 @@ local apple_logo = sbar.add("item", {
 		font = {
 			style = "Regular",
 		},
-		color = colors.accent,
+		color = colors.green,
 		width = 37,
 		padding_right = 10,
 		padding_left = 10,

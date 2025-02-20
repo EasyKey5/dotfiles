@@ -70,6 +70,10 @@ for i = 1, 9 do
 	end)
 end
 
+hyper.bindKey("0", function()
+	execYabai(string.format("-m space --focus 10"))
+end)
+
 for i = 1, 9 do
 	hs.hotkey.bind({ "alt" }, tostring(i), function()
 		execYabai(string.format("-m window --space %s", i))
@@ -77,6 +81,11 @@ for i = 1, 9 do
 		hs.alert(string.format("Moved to space %s", i))
 	end)
 end
+hs.hotkey.bind({ "alt" }, "0", function()
+	execYabai(string.format("-m window --space 10"))
+	execYabai(string.format("-m space --focus 10"))
+	hs.alert(string.format("Moved to space 10"))
+end)
 
 -- window float settings
 -- alt + shift
@@ -110,8 +119,6 @@ hyper.bindShiftKey("0", function()
 	execYabai("-m space --balance")
 end)
 
-
-
 -- layout settings
 local layouts = {
 	b = "bsp",
@@ -136,21 +143,19 @@ local toggleArgs = {
 	y = "-m space --mirror y-axis",
 }
 
-
 for key, command in pairs(toggleArgs) do
 	hyper.bindKeyWithModifiers(key, { "alt" }, function()
 		execYabai(command)
 	end)
 end
 
-
 -- toggle split
-hyper.bindKey("s", function ()
+hyper.bindKey("s", function()
 	execYabai("-m window --toggle split")
 end)
 
 -- toggle fullscreen
-hyper.bindShiftKey("f", function ()
+hyper.bindShiftKey("f", function()
 	execYabai("-m window --toggle zoom-fullscreen")
 end)
 
@@ -177,12 +182,16 @@ end
 
 -- Select an app
 
-hyper.bindKey("a", function ()
+hyper.bindKey("a", function()
 	execYabai("-m window --focus $(yabai -m query --windows --space | jq -c '.[1].id')")
+end)
+
+-- Restart yabai
+hyper.bindKey("y", function()
+	execYabai("--restart-service")
 end)
 
 return {
 	yabai = yabai,
 	execYabai = execYabai,
 }
-

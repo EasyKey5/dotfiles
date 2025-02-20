@@ -3,18 +3,18 @@ local colors = require("colors")
 
 local front_app = sbar.add("item", {
 	background = {
-		color = colors.accent,
+		color = colors.bg,
 	},
 	icon = {
 		drawing = true,
 		font = "sketchybar-app-font:regular:20",
-		color = colors.black,
+		color = colors.blue,
 	},
 	label = {
 		font = {
 			style = "Bold",
 		},
-		color = colors.black,
+		color = colors.blue,
 	},
 })
 

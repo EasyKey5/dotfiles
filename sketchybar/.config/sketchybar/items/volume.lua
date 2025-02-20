@@ -1,7 +1,7 @@
 local colors = require("colors")
 local icons = require("icons")
 
-local volume_slider = sbar.add("slider", 100, {
+local volume_slider = sbar.add("slider", 0, {
 	position = "right",
 	updates = true,
 	label = { drawing = false },
@@ -69,6 +69,7 @@ end)
 
 local function animate_slider_width(width)
 	sbar.animate("tanh", 30.0, function()
+		volume_slider.drawing = true
 		volume_slider:set({ slider = { width = width } })
 	end)
 end

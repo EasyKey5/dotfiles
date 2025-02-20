@@ -10,6 +10,10 @@ local calendar = sbar.add("item", {
 	-- },
 })
 
+calendar:subscribe("mouse.clicked", function(env)
+	sbar.exec("open /System/Applications/Calendar.app")
+end)
+
 local function update()
 	date = os.date("%a %d %b %H:%M")
 	calendar:set({ label = date })
