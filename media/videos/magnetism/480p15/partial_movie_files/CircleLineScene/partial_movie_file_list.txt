@@ -1,2 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/tama/dotfiles/media/videos/magnetism/480p15/partial_movie_files/CircleLineScene/3036465713_3467822883_547676006.mp4'
