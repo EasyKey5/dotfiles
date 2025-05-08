@@ -21,7 +21,12 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    { 'ahmedkhalf/project.nvim' },
+    {
+      'ahmedkhalf/project.nvim',
+      config = function()
+        require('project_nvim').setup {}
+      end,
+    },
     { 'harpoon' },
   },
   config = function()

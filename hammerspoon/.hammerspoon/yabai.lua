@@ -9,6 +9,29 @@ local function execYabai(args)
 	os.execute(command)
 end
 
+-- Restart yabai
+hyper.bindKey("y", function()
+	execYabai("--restart-service")
+end)
+
+-- Get Windows in Current Space
+local function getWindowsInCurrentSpace()
+	local cmd = "/opt/homebrew/bin/yabai -m query --windows --space"
+	local output, success, _, rc = hs.execute(cmd, true)
+
+	if not success then
+		hs.alert("Failed to query windows in space (code " .. tostring(rc) .. ")")
+		return nil
+	end
+
+	local ok, result = pcall(hs.json.decode, output)
+	if not ok then
+		hs.alert("Failed to parse yabai JSON")
+		return nil
+	end
+
+	return result
+end
 -- "directions" for vim keybindings
 local directions = {
 	h = "west",
@@ -183,12 +206,29 @@ end
 -- Select an app
 
 hyper.bindKey("a", function()
-	execYabai("-m window --focus $(yabai -m query --windows --space | jq -c '.[1].id')")
+	local windows = getWindowsInCurrentSpace()
+	if windows then
+		for _, win in ipairs(windows) do
+			if win["is-floating"] == false then
+				execYabai("-m window --focus " .. win.id)
+				return
+			end
+		end
+		hs.alert("No docked window found.")
+	end
 end)
-
--- Restart yabai
-hyper.bindKey("y", function()
-	execYabai("--restart-service")
+-- Select floating app
+hyper.bindKey("f", function()
+	local windows = getWindowsInCurrentSpace()
+	if windows then
+		for _, win in ipairs(windows) do
+			if win["is-floating"] == true then
+				execYabai("-m window --focus " .. win.id)
+				return
+			end
+		end
+		hs.alert("No floating window found.")
+	end
 end)
 
 return {

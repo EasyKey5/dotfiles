@@ -12,55 +12,81 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd [[colorscheme tokyonight]]
+      require('tokyonight').setup {
+        transparent = true,
+      }
+      -- vim.cmd [[colorscheme tokyonight]]
     end,
   },
   {
-    'xiyaowong/transparent.nvim',
+    'catppuccin/nvim',
+    name = 'catppuccin',
     lazy = false,
+    priority = 1000,
     config = function()
-      -- Optional, you don't have to run setup.
-      require('transparent').setup {
-        -- table: default groups
-        groups = {
-          'Normal',
-          'NormalNC',
-          'Comment',
-          'Constant',
-          'Special',
-          'Identifier',
-          'Statement',
-          'PreProc',
-          'Type',
-          'Underlined',
-          'Todo',
-          'String',
-          'Function',
-          'Conditional',
-          'Repeat',
-          'Operator',
-          'Structure',
-          'LineNr',
-          'NonText',
-          'SignColumn',
-          'CursorLine',
-          'CursorLineNr',
-          'StatusLine',
-          'StatusLineNC',
-          'EndOfBuffer',
+      require('catppuccin').setup {
+        integrations = {
+          notify = true,
         },
-        -- table: additional groups that should be cleared
-        extra_groups = {
-          'NormalFloat', -- plugins which have float panel such as Lazy, Mason, LspInfo
-          'NvimTreeNormal', -- NvimTree
-        },
-        -- table: groups you don't want to clear
-        exclude_groups = {},
-        -- function: code to be executed after highlight groups are cleared
-        -- Also the user event "TransparentClear" will be triggered
-        on_clear = function() end,
+        transparent_background = true,
+        custom_highlights = function(colors)
+          return {
+
+            CursorLine = { bg = colors.none },
+            -- Comment = { fg = colors.text },
+          }
+        end,
       }
+
+      vim.cmd [[colorscheme catppuccin]]
     end,
+  },
+  {
+    -- 'xiyaowong/transparent.nvim',
+    -- lazy = false,
+    -- config = function()
+    --   -- Optional, you don't have to run setup.
+    --   require('transparent').setup {
+    --     -- table: default groups
+    --     groups = {
+    --       'Normal',
+    --       'NormalNC',
+    --       'Comment',
+    --       'Constant',
+    --       'Special',
+    --       'Identifier',
+    --       'Statement',
+    --       'PreProc',
+    --       'Type',
+    --       'Underlined',
+    --       'Todo',
+    --       'String',
+    --       'Function',
+    --       'Conditional',
+    --       'Repeat',
+    --       'Operator',
+    --       'Structure',
+    --       'LineNr',
+    --       'NonText',
+    --       'SignColumn',
+    --       'CursorLine',
+    --       'CursorLineNr',
+    --       'StatusLine',
+    --       'StatusLineNC',
+    --       'EndOfBuffer',
+    --     },
+    --     -- table: additional groups that should be cleared
+    --     extra_groups = {
+    --       'NormalFloat', -- plugins which have float panel such as Lazy, Mason, LspInfo
+    --       'NvimTreeNormal', -- NvimTree
+    --     },
+    --     -- table: groups you don't want to clear
+    --     exclude_groups = {},
+    --     -- function: code to be executed after highlight groups are cleared
+    --     -- Also the user event "TransparentClear" will be triggered
+    --     on_clear = function() end,
+    --   }
+    -- end,
   },
   {
     'nvim-lualine/lualine.nvim',
@@ -279,5 +305,15 @@ return {
       }
     end,
     dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = function()
+      local tgltrm = require 'toggleterm'
+      tgltrm.setup()
+      vim.keymap.set('n', '<leader>ms', ':ToggleTermSendCurrentLine<CR> 1')
+      vim.keymap.set('v', '<leader>ms', ':ToggleTermSendVisualLines<CR> 1')
+    end,
   },
 }

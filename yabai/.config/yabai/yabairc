@@ -51,9 +51,10 @@ yabai -m rule --add app="CleanShot X" manage=off
 yabai -m rule --add app="^picopad$" manage=off mouse_follows_focus=off
 yabai -m rule --add app="^Calculator$" manage=off mouse_follows_focus=off
 yabai -m rule --add app="^Dropover$" manage=off mouse_follows_focus=off
+yabai -m rule --add app="^Affinity Designer$" manage=off mouse_follows_focus=off
 yabai -m rule --add title="^UTM – Windows 1$" manage=off mouse_follows_focus=off
 yabai -m rule --add title="^Enter new Value for" manage=off mouse_follows_focus=off
-
+yabai -m rule --add app="^Arc$" title="^$" mouse_follows_focus=off
 
 # yabai -m rule --add app="^MultiViewer for F1" title="Track Map - MultiViewer" manage=off mouse_follows_focus=off
 

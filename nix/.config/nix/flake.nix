@@ -65,7 +65,7 @@
           pkgs.arc-browser
           pkgs.home-manager
           pkgs.ripgrep
-          # pkgs.cargo
+          pkgs.cargo
           pkgs.youtube-music
           pkgs.texliveFull
           pkgs.bartender
@@ -75,6 +75,7 @@
           pkgs.ollama
           pkgs.nixd
           pkgs.direnv
+          pkgs.fastfetch
         ];
 
         homebrew = {
@@ -82,12 +83,17 @@
 
           taps = [
             # for sketchybar
+            "brew/bundle"
             "FelixKratz/formulae"
           ];
 
           # CLI Tools
           brews = [
             "neofetch"
+            # let tmux use system clipboard
+            "reattach-to-user-namespace"
+
+            "taskell"
 
             {
               name = "sketchybar";
