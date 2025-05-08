@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    # nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -15,10 +15,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-bundle = {
-      url = "github:homebrew/homebrew-bundle";
-      flake = false;
-    };
+    # homebrew-bundle = {
+    #   url = "github:homebrew/homebrew-bundle";
+    #   flake = false;
+    # };
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # for ROS
@@ -32,10 +32,9 @@
   outputs = inputs@{ self,
                      nix-darwin, 
                      nixpkgs, 
-                     nix-homebrew, 
+                     # nix-homebrew, 
                      homebrew-core, 
                      homebrew-cask, 
-                     homebrew-bundle, 
                      home-manager, 
                      rust-overlay, 
                      flake-utils,
@@ -83,7 +82,6 @@
 
           taps = [
             # for sketchybar
-            "brew/bundle"
             "FelixKratz/formulae"
           ];
 
@@ -192,20 +190,20 @@
           configuration
           nix-homebrew.darwinModules.nix-homebrew
           {
-            nix-homebrew = {
-              enable = true;
-              enableRosetta = true;
-              user = "tama";
-              autoMigrate = true;
-
-              # # Optional: Declarative tap management
-              # taps = {
-              #   "homebrew/homebrew-core" = homebrew-core;
-              #   "homebrew/homebrew-cask" = homebrew-cask;
-              #   "homebrew/homebrew-bundle" = homebrew-bundle;
-              # };
-
-            };
+            # nix-homebrew = {
+            #   enable = false;
+            #   enableRosetta = true;
+            #   user = "tama";
+            #   autoMigrate = true;
+            #
+            #   # Optional: Declarative tap management
+            #   taps = {
+            #     "homebrew/homebrew-core" = homebrew-core;
+            #     "homebrew/homebrew-cask" = homebrew-cask;
+            #     # "homebrew/homebrew-bundle" = homebrew-bundle;
+            #   };
+            #
+            # };
           }
         ];
     };
