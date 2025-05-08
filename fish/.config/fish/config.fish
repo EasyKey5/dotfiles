@@ -14,5 +14,5 @@ function fish_mode_prompt; end
 set -g EDITOR nvim
 
 
-direnv hook fish | source
+# direnv hook fish | source
 

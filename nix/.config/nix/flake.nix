@@ -66,7 +66,7 @@
           pkgs.ripgrep
           pkgs.cargo
           pkgs.youtube-music
-          pkgs.texliveFull
+          pkgs.texliveSmall
           pkgs.bartender
           pkgs.stow
           pkgs.istatmenus
@@ -78,7 +78,7 @@
         ];
 
         homebrew = {
-          enable = true;
+          enable = false;
 
           taps = [
             # for sketchybar
@@ -103,7 +103,6 @@
 
           # GUI Apps
           casks = [
-            "wezterm"
             "youtube-music"
             "raycast"
             "font-hack-nerd-font"
@@ -131,55 +130,55 @@
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
+    #
+    #   # Used for backwards compatibility, please read the changelog before changing.
+    #   # $ darwin-rebuild changelog
       system.stateVersion = 5;
-
-
+    #
+    #
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
-
-
-      # Home Manager
-      users.users.tama.home = "/Users/tama/";
-      # home-manager.backupFileExtension = ".bak";
-
-
-
-      # MacOS config
-      system.defaults = {
-
-          dock.autohide = true;
-          finder = {
-              AppleShowAllExtensions = true;
-              AppleShowAllFiles = true;
-              ShowPathbar = true;
-              FXEnableExtensionChangeWarning = false;
-              FXPreferredViewStyle="clmv"; # column view
-          };
-      };
-
-      launchd.user.agents.remap-keys = {
-      serviceConfig = {
-        ProgramArguments = [
-          "/usr/bin/hidutil"
-          "property"
-          "--set"
-          ''{
-            "UserKeyMapping":[
-              
-          
-          {"HIDKeyboardModifierMappingDst": 30064771181,
-          "HIDKeyboardModifierMappingSrc": 30064771129}
-     
-
-              ]
-          }''
-        ];
-        RunAtLoad = true;
-      };
-    };
+    #
+    #
+    #   # Home Manager
+    #   users.users.tama.home = "/Users/tama/";
+    #   # home-manager.backupFileExtension = ".bak";
+    #
+    #
+    #
+    #   # MacOS config
+    #   system.defaults = {
+    #
+    #       dock.autohide = true;
+    #       finder = {
+    #           AppleShowAllExtensions = true;
+    #           AppleShowAllFiles = true;
+    #           ShowPathbar = true;
+    #           FXEnableExtensionChangeWarning = false;
+    #           FXPreferredViewStyle="clmv"; # column view
+    #       };
+    #   };
+    #
+    #   launchd.user.agents.remap-keys = {
+    #   serviceConfig = {
+    #     ProgramArguments = [
+    #       "/usr/bin/hidutil"
+    #       "property"
+    #       "--set"
+    #       ''{
+    #         "UserKeyMapping":[
+    #           
+    #       
+    #       {"HIDKeyboardModifierMappingDst": 30064771181,
+    #       "HIDKeyboardModifierMappingSrc": 30064771129}
+    #  
+    #
+    #           ]
+    #       }''
+    #     ];
+    #     RunAtLoad = true;
+    #   };
+    # };
   };
   in
   {
@@ -188,23 +187,23 @@
     darwinConfigurations."Tamas-Laptop" = nix-darwin.lib.darwinSystem {
       modules = [ 
           configuration
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            # nix-homebrew = {
-            #   enable = false;
-            #   enableRosetta = true;
-            #   user = "tama";
-            #   autoMigrate = true;
-            #
-            #   # Optional: Declarative tap management
-            #   taps = {
-            #     "homebrew/homebrew-core" = homebrew-core;
-            #     "homebrew/homebrew-cask" = homebrew-cask;
-            #     # "homebrew/homebrew-bundle" = homebrew-bundle;
-            #   };
-            #
-            # };
-          }
+          # nix-homebrew.darwinModules.nix-homebrew
+          # {
+          #   nix-homebrew = {
+          #     enable = false;
+          #     enableRosetta = true;
+          #     user = "tama";
+          #     autoMigrate = true;
+          #
+          #     # Optional: Declarative tap management
+          #     taps = {
+          #       "homebrew/homebrew-core" = homebrew-core;
+          #       "homebrew/homebrew-cask" = homebrew-cask;
+          #       # "homebrew/homebrew-bundle" = homebrew-bundle;
+          #     };
+          #
+          #   };
+          # }
         ];
     };
 
