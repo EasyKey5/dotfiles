@@ -1,0 +1,19 @@
+{
+  "@context": "/contexts/Account",
+  "@id": "/accounts/6844a76e67feb020e90a5959",
+  "@type": "Account",
+  "id": "6844a76e67feb020e90a5959",
+  "address": "dhcui8@punkproof.com",
+  "quota": 40000000,
+  "used": 0,
+  "isDisabled": false,
+  "isDeleted": false,
+  "createdAt": "2025-06-07T20:56:14+00:00",
+  "updatedAt": "2025-06-07T20:56:14+00:00",
+  "password": "gbdxpt",
+  "token": {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDkzMjk3NzQsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJhZGRyZXNzIjoiZGhjdWk4QHB1bmtwcm9vZi5jb20iLCJpZCI6IjY4NDRhNzZlNjdmZWIwMjBlOTBhNTk1OSIsIm1lcmN1cmUiOnsic3Vic2NyaWJlIjpbIi9hY2NvdW50cy82ODQ0YTc2ZTY3ZmViMDIwZTkwYTU5NTkiXX19.4BXldebT6m-IiL8pJRAqS41MxqymmEdU9zIZd1OzwwVSj3KD_iUkiYyQbNKXD2_FPoCd-4z6eNlnzII-hspKFw",
+    "@id": "/accounts/6844a76e67feb020e90a5959",
+    "id": "6844a76e67feb020e90a5959"
+  }
+}

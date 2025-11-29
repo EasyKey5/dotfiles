@@ -34,7 +34,8 @@ yabai -m config mouse_drop_action            swap
 yabai -m config layout                       bsp
 
 # add space for sketchybar
-yabai -m config external_bar "all:50:0"
+# yabai -m config external_bar "all:50:0"
+yabai -m config top_padding                  10
 yabai -m config bottom_padding               10
 yabai -m config left_padding                 10
 yabai -m config right_padding                10
@@ -54,7 +55,10 @@ yabai -m rule --add app="^Dropover$" manage=off mouse_follows_focus=off
 yabai -m rule --add app="^Affinity Designer$" manage=off mouse_follows_focus=off
 yabai -m rule --add title="^UTM – Windows 1$" manage=off mouse_follows_focus=off
 yabai -m rule --add title="^Enter new Value for" manage=off mouse_follows_focus=off
+yabai -m rule --add title="^Block Parameters:" manage=off mouse_follows_focus=off
 yabai -m rule --add app="^Arc$" title="^$" mouse_follows_focus=off
+yabai -m rule --add app="Fusion" manage=on mouse_follows_focus=off
+yabai -m rule --add app="^HP Prime$" manage=off mouse_follows_focus=off
 
 # yabai -m rule --add app="^MultiViewer for F1" title="Track Map - MultiViewer" manage=off mouse_follows_focus=off
 

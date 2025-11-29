@@ -16,8 +16,9 @@ end)
 
 -- Get Windows in Current Space
 local function getWindowsInCurrentSpace()
-	local cmd = "/opt/homebrew/bin/yabai -m query --windows --space"
+	local cmd = "/run/current-system/sw/bin/yabai -m query --windows --space"
 	local output, success, _, rc = hs.execute(cmd, true)
+	print(output)
 
 	if not success then
 		hs.alert("Failed to query windows in space (code " .. tostring(rc) .. ")")
@@ -29,6 +30,8 @@ local function getWindowsInCurrentSpace()
 		hs.alert("Failed to parse yabai JSON")
 		return nil
 	end
+
+	print(result)
 
 	return result
 end
@@ -182,31 +185,21 @@ hyper.bindShiftKey("f", function()
 	execYabai("-m window --toggle zoom-fullscreen")
 end)
 
---NOTE: Toggle an app
+-- change border
 
-hs.application.enableSpotlightForNameSearches(true)
-local toggleApp = function(appName, launch)
-	launch = launch or false
-	local app = hs.application.get(appName)
-	if app then
-		if app:isFrontmost() then
-			app:hide()
-		else
-			app:activate()
-		end
-	else
-		if launch then
-			hs.application.launchOrFocus(appName)
-		else
-			hs.alert.show("App '" .. appName .. "' is not loaded!")
-		end
-	end
-end
-
+hyper.bindKey("b", function()
+	local _, width = hs.dialog.textPrompt("Border width", "Enter the border width in pixels", "10")
+	print(width)
+	execYabai("-m config top_padding    " .. width)
+	execYabai("-m config bottom_padding " .. width)
+	execYabai("-m config left_padding   " .. width)
+	execYabai("-m config right_padding  " .. width)
+end)
 -- Select an app
 
 hyper.bindKey("a", function()
 	local windows = getWindowsInCurrentSpace()
+	print(windows)
 	if windows then
 		for _, win in ipairs(windows) do
 			if win["is-floating"] == false then

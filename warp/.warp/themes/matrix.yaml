@@ -1,0 +1,22 @@
+name: Matrix
+details: darker
+accent: "#00FF00"
+foreground: "#00FF00"
+background: "#000000"
+terminal_colors:
+  bright_black: "#333333"
+  bright_red: "#FF0000"
+  bright_green: "#00FF00"
+  bright_yellow: "#FFFF00"
+  bright_blue: "#0000FF"
+  bright_magenta: "#FF00FF"
+  bright_cyan: "#00FFFF"
+  bright_white: "#FFFFFF"
+  normal_black: "#000000"
+  normal_red: "#800000"
+  normal_green: "#00FF00"
+  normal_yellow: "#808000"
+  normal_blue: "#000080"
+  normal_magenta: "#800080"
+  normal_cyan: "#008080"
+  normal_white: "#C0C0C0"

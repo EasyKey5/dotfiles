@@ -84,14 +84,6 @@
           pkgs.winetricks
           pkgs.cabextract
           pkgs.mailsy
-          pkgs.iterm2
-          pkgs.typst
-          pkgs.claude-code
-          pkgs.just
-          pkgs.git-lfs
-          pkgs.eza
-          pkgs.obsidian
-          pkgs.arduino-cli
           ## AUTO-INSTERTED PACKAGES - DO NOT REMOVE THIS LINE ##
         ];
 
@@ -131,7 +123,6 @@
             }
             "Kegworks-App/kegworks/kegworks"
             "warp"
-            "lookaway"
           ];
       masApps = { 
             "Surfshark" = 1437809329;
